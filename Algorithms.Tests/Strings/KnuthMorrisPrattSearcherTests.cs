@@ -1,6 +1,5 @@
 ﻿using Algorithms.Strings;
 using NUnit.Framework;
-using Utilities.Exceptions;
 
 namespace Algorithms.Tests.Strings
 {
@@ -23,15 +22,18 @@ namespace Algorithms.Tests.Strings
         }
 
         [Test]
-        public static void FindIndexes_ItemsMissing_ItemNotFoundExceptionThrown()
+        public static void FindIndexes_ItemsMissing_NoIndexesReturned()
         {
             // Arrange
             var searcher = new KnuthMorrisPrattSearcher();
             var str = "ABABA";
             var pat = "ABB";
 
-            // Act & Assert
-            _ = Assert.Throws<ItemNotFoundException>(() => searcher.FindIndexes(str, pat));
+            // Act
+            var indexes = searcher.FindIndexes(str, pat);
+
+            // Assert
+            Assert.IsEmpty(indexes);
         }
 
         [Test]
@@ -43,7 +45,7 @@ namespace Algorithms.Tests.Strings
 
             // Act
             var expectedItem = new[] { 0,0,1 };
-            var actualItem = searcher.LongestPrefixSuffixValues(s);
+            var actualItem = searcher.FindLongestPrefixSuffixValues(s);
 
             // Assert
             CollectionAssert.AreEqual(expectedItem, actualItem);
@@ -58,7 +60,7 @@ namespace Algorithms.Tests.Strings
 
             // Act
             var expectedItem = new[] { 0, 1, 0, 1, 2, 0, 1, 2, 3, 4, 5 };
-            var actualItem = searcher.LongestPrefixSuffixValues(s);
+            var actualItem = searcher.FindLongestPrefixSuffixValues(s);
 
             // Assert
             CollectionAssert.AreEqual(expectedItem, actualItem);
@@ -73,7 +75,7 @@ namespace Algorithms.Tests.Strings
 
             // Act
             var expectedItem = new[] { 0, 0 };
-            var actualItem = searcher.LongestPrefixSuffixValues(s);
+            var actualItem = searcher.FindLongestPrefixSuffixValues(s);
 
             // Assert
             CollectionAssert.AreEqual(expectedItem, actualItem);
